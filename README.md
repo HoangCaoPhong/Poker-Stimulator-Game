@@ -32,7 +32,7 @@ cmake --build build --parallel
 On Debian or Ubuntu, replace the package command with:
 
 ```bash
-sudo apt install cmake g++ libx11-dev libxrandr-dev libxcursor-dev libxi-dev libgl1-mesa-dev libudev-dev
+sudo apt install cmake g++ libx11-dev libxrandr-dev libxcursor-dev libxi-dev libgl1-mesa-dev libudev-dev libfreetype6-dev libjpeg-dev
 ```
 
 ### Windows
