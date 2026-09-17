@@ -1,0 +1,43 @@
+# Build output
+/build/
+/build-*/
+/out/
+/install/
+/cmake-build-*/
+/CMakeFiles/
+/CMakeCache.txt
+/CTestTestfile.cmake
+/Testing/
+/_deps/
+
+# Compiled applications and libraries
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.o
+*.obj
+*.pdb
+*.ilk
+*.dSYM/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.code-workspace
+*.user
+*.suo
+*.vcxproj.user
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Runtime files
+/data/*.log
+/data/*.save
+/data/*.json
+!/data/.gitkeep
