@@ -1,64 +1,82 @@
-# Poker Simulator Game
+# Poker Simulator
 
-## 📌 Overview  
-Poker SimulatorSimulator Game is an advanced poker game simulation designed for both entertainment and strategic gameplay analysis. It supports multiple poker variants and provides an engaging experience through AI-powered opponents and real-time analytics.
+Poker Simulator is a cross-platform desktop poker demo written in modern C++ and rendered with SFML. The current game presents two five-card hands, evaluates them using standard poker rules, and shows the result on an interactive table.
 
-## 🎮 Features  
-- Multiple game modes: **PvP, PvE, Draw Poker, Single Card Duel, Three Card Poker**.  
-- AI-powered opponents with three difficulty levels: **Lv1 - Normal, Lv2 - Challenge, Lv3 - Legendary**.  
-- Real-time game analytics and player statistics.  
-- User-friendly UI with smooth and interactive design.  
-- **Leaderboard** to track top players.  
-- Game Graphics Development for enhanced user experience.  
-- Detailed **player information** display, including game history and performance stats.
+## Highlights
 
-## 🏗️ Tech Stack  
-- Programming Language: C++, LaTeX
-- IDE: VS Code, Overleaf
+- Native desktop rendering with SFML graphics, window, and input modules.
+- A shuffled 52-card deck and complete five-card hand evaluation, including tie breakers.
+- Responsive card-table interface with mouse and keyboard controls.
+- CMake-based builds for Linux and Windows, with automated checks for both platforms.
+- A small, independently testable game domain separated from the SFML presentation layer.
 
-## 🚀 Installation & Setup  
-### Prerequisites  
-- C++17+, g++ (compiler)  
-- LaTeX distribution (if compiling documentation)  
+## Requirements
 
-### Installation Steps  
-1. **Clone the repository:**  
-   ```bash  
-   git clone https://github.com/yourusername/poker-simulator-game.git  
-   cd poker-simulation-game  
-   ```  
+- CMake 3.21 or newer
+- A C++17 compiler
+- Git, when allowing CMake to fetch SFML automatically
 
-2. **Compile the source code:**  
-   ```bash  
-   g++ -std=c++17 -o poker_game main.cpp game_logic.cpp ui.cpp -Iinclude  
-   ```  
+SFML 2.5+ is used. CMake first looks for a system installation and otherwise downloads the pinned SFML 2.6.1 source during configuration. On Linux, install the usual OpenGL, X11, Xrandr, Xcursor, Xi, and UDev development packages before configuring.
 
-3. **Run the game:**  
-   ```bash  
-   ./poker_game  
-   ```  
+## Build and run
 
-## 📖 How to Play  
-1. Choose game mode: PvP, PvE, Draw Poker, Single Card Duel, or Three Card Poker.
-2. You can select the number of participants, enter player information.
-3. If playing PvE, select AI difficulty level (Lv1 - Normal, Lv2 - Challenge, Lv3 - Legendary). 
-4. View statistics and analytics after each game session.  
+### Linux
 
-## 🛠️ Contributing  
-We welcome contributions! Follow these steps to contribute:  
-1. Fork this repository.  
-2. Create a feature branch (`feature-xyz`).  
-3. Commit changes and open a pull request.  
+```bash
+sudo dnf install cmake gcc-c++ libX11-devel libXrandr-devel libXcursor-devel libXi-devel mesa-libGL-devel systemd-devel
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel
+./build/poker_simulator
+```
 
-## 📜 License  
-This project is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE) file for details.  
+On Debian or Ubuntu, replace the package command with:
 
-## 👥 Triple Star Team Members  
-- **Hoàng Cao Phong** – Team Leader, Game Logic Developer  
-- **Nguyễn Trung Kiên** – Backend Engineer, Technical Writer  
-- **Võ Thúc Trí** – UI/UX Designer, QA Tester  
+```bash
+sudo apt install cmake g++ libx11-dev libxrandr-dev libxcursor-dev libxi-dev libgl1-mesa-dev libudev-dev
+```
 
-## 📧 Contact  
-For inquiries or feedback, please reach out via email: **hoangcaophong.works@gmail.com**  
+### Windows
 
-🚀 *Enjoy playing Poker Simulator Game!*
+Open a Developer PowerShell for Visual Studio:
+
+```powershell
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+cmake --build build --config Release
+.\build\Release\poker_simulator.exe
+```
+
+The build copies the required game assets and SFML runtime libraries beside the executable. The resulting build output is therefore the starting point for a platform-specific release folder.
+
+### Tests
+
+```bash
+cmake -S . -B build -DPOKER_BUILD_TESTS=ON
+cmake --build build --parallel
+ctest --test-dir build --output-on-failure
+```
+
+## Controls
+
+- **Deal / Space / Enter**: deal a new round.
+- **Escape**: close the game.
+
+## Project layout
+
+```text
+assets/           Runtime assets packaged next to the game
+docs/             Historical project documentation
+include/poker/    Public C++ headers
+src/domain/       Deck and hand-evaluation logic
+src/ui/           SFML application and rendering
+tests/            Automated domain tests
+legacy/           Preserved original console implementation, excluded from builds
+.github/          Continuous-integration workflows
+```
+
+## Distribution
+
+Use the `Release` build output as the distributable directory: it contains the executable and `assets/`. For a Windows release, build on Windows; for a Linux release, build on Linux. This ensures each package contains binaries and runtime dependencies for its target operating system.
+
+## License
+
+This project is licensed under the Apache License 2.0. See [LICENSE](LICENSE).
